@@ -1,0 +1,7 @@
+
+ksquid:S1450"VRemove the "mAdView" field and declare it as a local variable in the relevant methods.(­üêª
+@squid:S1172"+Remove this unused method parameter "view".(•Úµø
+@squid:S1172"+Remove this unused method parameter "view".(ÔÅš³
+Ssquid:UselessImportCheck"1Remove this unused import 'android.app.Activity'.(‡ÊÍÆ
+`squid:UselessImportCheck">Remove this unused import 'com.google.android.gms.ads.AdSize'.(Æ—Œã
+isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(­šúºýÿÿÿÿ
