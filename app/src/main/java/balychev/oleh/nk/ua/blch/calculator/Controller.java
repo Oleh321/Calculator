@@ -34,6 +34,7 @@ public class Controller {
 
     public void clear() {
         this.displayNumber = new StringBuilder("0");
+        calculator.reset();
     }
 
     public double parseNumber(){
@@ -50,24 +51,33 @@ public class Controller {
     public void number(char c){
         if(previousState != State.NUMBER) {
             displayNumber = new StringBuilder();
-            previousState = State.NUMBER;
+           // if (previousState == State.EQUAL)
+            //    calculator.reset();
+
         }
+        previousState = State.NUMBER;
         addChar(c);
     }
 
     public void operation(char c){
         if(previousState != State.OPERATION){
-            Log.d("myLogs", String.valueOf(parseNumber()));
-            calculator.setSecondValue(parseNumber());
-            calculator.setOperation(c);
-            double res = calculator.calculate();
-            Log.d("myLogs", String.valueOf(res));
-            calculator.setFirstValue(res);
-            previousState = State.OPERATION;
+            if(previousState == State.NUMBER){
+                double res = calculator.calculate(parseNumber());
+                displayNumber = new StringBuilder(String.valueOf(res));
+                calculator.setValue(res);
+            }
         }
-
+        previousState = State.OPERATION;
         calculator.setOperation(c);
     }
 
 
+    public void equally() {
+        if(previousState == State.NUMBER){
+            double res = calculator.calculate(parseNumber());
+            displayNumber = new StringBuilder(String.valueOf(res));
+            calculator.setValue(res);
+            previousState = State.EQUAL;
+        }
+    }
 }

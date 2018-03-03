@@ -5,24 +5,23 @@ import android.util.Log;
 
 public class Calculator {
 
-    private double firstValue = 0;
-    private double secondValue = 0;
+    private double value = 0;
     private char operation = '+';
 
-    public double calculate(){
+    public double calculate(double next){
         double res = 0;
         switch(operation){
             case '+':
-                res = firstValue + secondValue;
+                res = value + next;
                 break;
             case '-':
-                res = firstValue - secondValue;
+                res = value - next;
                 break;
             case '*':
-                res = firstValue * secondValue;
+                res = value * next;
                 break;
             case '/':
-                res = firstValue/secondValue;
+                res = value / next;
                 break;
         }
         return res;
@@ -32,11 +31,12 @@ public class Calculator {
         this.operation = operation;
     }
 
-    public void setFirstValue(double firstValue) {
-        this.firstValue = firstValue;
+    public void setValue(double value) {
+        this.value = value;
     }
 
-    public void setSecondValue(double secondValue) {
-        this.secondValue = secondValue;
+    public void reset() {
+        value = 0;
+        operation = '+';
     }
 }

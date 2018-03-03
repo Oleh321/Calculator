@@ -43,15 +43,18 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onEqualBtnClick(View view) {
-    }
-
-    private void display(){
-        mEditText.setText(controller.getNumber());
+        controller.equally();
+        display();
     }
 
     public void onOperationBtnClick(View view) {
         Button button = (Button) view;
         controller.operation(button.getText().toString().charAt(0));
+        display();
 
+    }
+
+    private void display(){
+        mEditText.setText(controller.getNumber());
     }
 }
