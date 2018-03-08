@@ -1,8 +1,10 @@
 package balychev.oleh.nk.ua.blch.calculator;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,6 +32,7 @@ public class CalculatorActivity extends AppCompatActivity {
         controller = new Controller();
         display();
     }
+
 
     public void onNumberBtnClick(View view) {
         Button button = (Button) view;

@@ -5,8 +5,13 @@ import android.util.Log;
 
 public class Calculator {
 
-    private double value = 0;
-    private char operation = '+';
+    private double value;
+    private char operation;
+
+
+    public Calculator() {
+        reset();
+    }
 
     public double calculate(double next){
         double res = 0;

@@ -3,12 +3,11 @@ package balychev.oleh.nk.ua.blch.calculator;
 import android.util.Log;
 
 public class Controller {
-    // Ввод чисел
-    private final int MAX_LENGTH = 12;
+    private final int MAX_INPUT_LENGTH = 12;
     private StringBuilder displayNumber;
 
     public Controller() {
-        this.displayNumber = new StringBuilder("0");
+        this.displayNumber = new StringBuilder();
         previousState = State.EQUAL;
         calculator = new Calculator();
     }
@@ -19,15 +18,13 @@ public class Controller {
 
     private void addChar(char digit){
         if((digit == ',' && displayNumber.toString().indexOf(',') != -1)
-                || displayNumber.length() >= MAX_LENGTH){
+                || displayNumber.length() >= MAX_INPUT_LENGTH){
              return;
         }
         if(displayNumber.toString().equals("0")){
-            if(digit == ','){
-                displayNumber.append(digit);
-                return;
+            if(digit != ','){
+                displayNumber = new StringBuilder(digit);
             }
-            displayNumber = new StringBuilder(digit);
         }
         displayNumber.append(digit);
     }
@@ -50,9 +47,9 @@ public class Controller {
 
     public void number(char c){
         if(previousState != State.NUMBER) {
-            displayNumber = new StringBuilder();
-           // if (previousState == State.EQUAL)
-            //    calculator.reset();
+            displayNumber = new StringBuilder("0");
+            if (previousState == State.EQUAL)
+                calculator.reset();
 
         }
         previousState = State.NUMBER;
