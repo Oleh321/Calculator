@@ -25,6 +25,8 @@ public class Calculator {
                 res = value * next;
                 break;
             case '/':
+                if(next == 0)
+                    throw new ArithmeticException();
                 res = value / next;
                 break;
         }

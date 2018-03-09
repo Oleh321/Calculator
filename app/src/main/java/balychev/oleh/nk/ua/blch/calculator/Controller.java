@@ -18,20 +18,21 @@ public class Controller {
         if (previousState == State.NUMBER)
             return displayNumber.toString();
 
+        if (previousState == State.EXCEPTION)
+            return "Деление на 0";
+
         // Вывод целого числа
         double res = parseNumber();
         if(res == (int) res) {
             return String.format("%1.0f", res);
         }
 
-        if (res > Math.pow(10, 10)){
-            return String.format("%1.8e", res);
+        if (res >= Math.pow(10, 10)){
+            return getDisplayNumberBuFormat("%1.8E");
         }
 
         // Вывод дробных чисел с предотвращением погрешности
-        String format = String.format("%1.12f", Double.parseDouble(displayNumber.toString()));
-        format = Double.valueOf(format.replace(',', '.')).toString();
-        return format;
+        return getDisplayNumberBuFormat("%1.12f");
     }
 
     private void addChar(char digit){
@@ -54,9 +55,13 @@ public class Controller {
         calculator.reset();
     }
 
+    private String getDisplayNumberBuFormat(String format){
+        String value = String.format(format, Double.parseDouble(displayNumber.toString()));
+        value = Double.valueOf(value.replace(',', '.')).toString();
+        return value;
+    }
+
     private double parseNumber(){
-       /* if(displayNumber.indexOf(".") == displayNumber.length()-1)
-            displayNumber.deleteCharAt(displayNumber.length()-1);*/
        return Double.parseDouble(displayNumber.toString());
     }
 
@@ -72,9 +77,15 @@ public class Controller {
 
     public void operation(char c){
         if(previousState == State.NUMBER){
-            double res = calculator.calculate(parseNumber());
-            displayNumber = new StringBuilder(String.valueOf(res));
-            calculator.setValue(res);
+            try {
+                double res = calculator.calculate(parseNumber());
+                displayNumber = new StringBuilder(String.valueOf(res));
+                calculator.setValue(res);
+            } catch (ArithmeticException ex){
+                previousState = State.EXCEPTION;
+                calculator.reset();
+               return;
+            }
         }
         previousState = State.OPERATION;
         calculator.setOperation(c);
@@ -82,9 +93,15 @@ public class Controller {
 
     public void equality() {
         if(previousState == State.NUMBER){
-            double result = calculator.calculate(parseNumber());
-            displayNumber = new StringBuilder(String.valueOf(result));
-            calculator.setValue(result);
+            try {
+                double result = calculator.calculate(parseNumber());
+                displayNumber = new StringBuilder(String.valueOf(result));
+                calculator.setValue(result);
+            } catch (ArithmeticException ex){
+                previousState = State.EXCEPTION;
+                calculator.reset();
+                return;
+            }
             previousState = State.EQUALITY;
         }
     }

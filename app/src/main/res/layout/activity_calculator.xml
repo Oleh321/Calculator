@@ -33,8 +33,7 @@
             android:paddingTop="20dp"
             android:text="@string/ought"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            tools:ignore="RtlHardcoded" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/button"
