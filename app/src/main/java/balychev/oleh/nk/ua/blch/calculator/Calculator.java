@@ -8,7 +8,6 @@ public class Calculator {
     private double value;
     private char operation;
 
-
     public Calculator() {
         reset();
     }

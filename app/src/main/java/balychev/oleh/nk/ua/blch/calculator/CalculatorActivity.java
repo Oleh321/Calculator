@@ -1,10 +1,8 @@
 package balychev.oleh.nk.ua.blch.calculator;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -13,7 +11,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class CalculatorActivity extends AppCompatActivity {
-    private AdView mAdView;
     private EditText mEditText;
     private Controller controller;
 
@@ -24,7 +21,7 @@ public class CalculatorActivity extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(),
                 getString(R.string.YOUR_ADMOB_APP_ID));
 
-        mAdView = findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -33,10 +30,8 @@ public class CalculatorActivity extends AppCompatActivity {
         display();
     }
 
-
     public void onNumberBtnClick(View view) {
-        Button button = (Button) view;
-        controller.number(button.getText().toString().charAt(0));
+        controller.number(getCharOnButton(view));
         display();
     }
 
@@ -46,18 +41,22 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onEqualBtnClick(View view) {
-        controller.equally();
+        controller.equality();
         display();
     }
 
     public void onOperationBtnClick(View view) {
-        Button button = (Button) view;
-        controller.operation(button.getText().toString().charAt(0));
+        controller.operation(getCharOnButton(view));
         display();
-
     }
 
     private void display(){
         mEditText.setText(controller.getNumber());
     }
+
+    private char getCharOnButton(View view){
+        Button button = (Button) view;
+        return button.getText().toString().charAt(0);
+    }
+
 }
