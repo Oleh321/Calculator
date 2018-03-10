@@ -3,22 +3,22 @@ package balychev.oleh.nk.ua.blch.calculator;
 public class Controller {
     private final int MAX_INPUT_LENGTH = 12;
 
-    private StringBuilder displayNumber;
-    private State previousState;
-    private Calculator calculator;
+    private StringBuilder mDisplayNumber;
+    private State mPreviousState;
+    private Calculator mCalculator;
 
     public Controller() {
-        this.displayNumber = new StringBuilder("0");
-        previousState = State.EQUALITY;
-        calculator = new Calculator();
+        this.mDisplayNumber = new StringBuilder("0");
+        mPreviousState = State.EQUALITY;
+        mCalculator = new Calculator();
     }
 
     public String getNumber() {
         // Отображение во время набора чисел
-        if (previousState == State.NUMBER)
-            return displayNumber.toString();
+        if (mPreviousState == State.NUMBER)
+            return mDisplayNumber.toString();
 
-        if (previousState == State.EXCEPTION)
+        if (mPreviousState == State.EXCEPTION)
             return "Деление на 0";
 
         // Вывод целого числа
@@ -37,72 +37,72 @@ public class Controller {
 
     private void addChar(char digit){
         //Условия, при котором число или запятая не будет введено
-        if((digit == '.' && displayNumber.toString().indexOf('.') != -1)
-                || displayNumber.length() >= MAX_INPUT_LENGTH){
+        if((digit == '.' && mDisplayNumber.toString().indexOf('.') != -1)
+                || mDisplayNumber.length() >= MAX_INPUT_LENGTH){
              return;
         }
-        if(displayNumber.toString().equals("0")){
+        if(mDisplayNumber.toString().equals("0")){
             if(digit != '.'){
-                displayNumber.delete(0, displayNumber.length());
+                mDisplayNumber.delete(0, mDisplayNumber.length());
             }
     }
-        displayNumber.append(digit);
+        mDisplayNumber.append(digit);
     }
 
     public void clear() {
-        displayNumber.delete(0, displayNumber.length());
-        displayNumber.append("0");
-        calculator.reset();
+        mDisplayNumber.delete(0, mDisplayNumber.length());
+        mDisplayNumber.append("0");
+        mCalculator.reset();
     }
 
     private String getDisplayNumberBuFormat(String format){
-        String value = String.format(format, Double.parseDouble(displayNumber.toString()));
+        String value = String.format(format, Double.parseDouble(mDisplayNumber.toString()));
         value = Double.valueOf(value.replace(',', '.')).toString();
         return value;
     }
 
     private double parseNumber(){
-       return Double.parseDouble(displayNumber.toString());
+       return Double.parseDouble(mDisplayNumber.toString());
     }
 
     public void number(char c){
-        if(previousState != State.NUMBER) {
-            displayNumber = new StringBuilder("0");
-            if (previousState == State.EQUALITY)
-                calculator.reset();
+        if(mPreviousState != State.NUMBER) {
+            mDisplayNumber = new StringBuilder("0");
+            if (mPreviousState == State.EQUALITY)
+                mCalculator.reset();
         }
-        previousState = State.NUMBER;
+        mPreviousState = State.NUMBER;
         addChar(c);
     }
 
     public void operation(char c){
-        if(previousState == State.NUMBER){
+        if(mPreviousState == State.NUMBER){
             try {
-                double res = calculator.calculate(parseNumber());
-                displayNumber = new StringBuilder(String.valueOf(res));
-                calculator.setValue(res);
+                double res = mCalculator.calculate(parseNumber());
+                mDisplayNumber = new StringBuilder(String.valueOf(res));
+                mCalculator.setValue(res);
             } catch (ArithmeticException ex){
-                previousState = State.EXCEPTION;
-                calculator.reset();
+                mPreviousState = State.EXCEPTION;
+                mCalculator.reset();
                return;
             }
         }
-        previousState = State.OPERATION;
-        calculator.setOperation(c);
+        mPreviousState = State.OPERATION;
+        mCalculator.setOperation(c);
     }
 
     public void equality() {
-        if(previousState == State.NUMBER){
+        if(mPreviousState == State.NUMBER){
             try {
-                double result = calculator.calculate(parseNumber());
-                displayNumber = new StringBuilder(String.valueOf(result));
-                calculator.setValue(result);
+                double result = mCalculator.calculate(parseNumber());
+                mDisplayNumber = new StringBuilder(String.valueOf(result));
+                mCalculator.setValue(result);
             } catch (ArithmeticException ex){
-                previousState = State.EXCEPTION;
-                calculator.reset();
+                mPreviousState = State.EXCEPTION;
+                mCalculator.reset();
                 return;
             }
-            previousState = State.EQUALITY;
+            mPreviousState = State.EQUALITY;
         }
     }
 }

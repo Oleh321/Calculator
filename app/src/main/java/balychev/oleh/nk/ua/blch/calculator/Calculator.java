@@ -1,12 +1,10 @@
 package balychev.oleh.nk.ua.blch.calculator;
 
-import android.util.Log;
-
 
 public class Calculator {
 
-    private double value;
-    private char operation;
+    private double mValue;
+    private char mOperation;
 
     public Calculator() {
         reset();
@@ -14,35 +12,35 @@ public class Calculator {
 
     public double calculate(double next){
         double res = 0;
-        switch(operation){
+        switch(mOperation){
             case '+':
-                res = value + next;
+                res = mValue + next;
                 break;
             case '-':
-                res = value - next;
+                res = mValue - next;
                 break;
             case '*':
-                res = value * next;
+                res = mValue * next;
                 break;
             case '/':
                 if(next == 0)
                     throw new ArithmeticException();
-                res = value / next;
+                res = mValue / next;
                 break;
         }
         return res;
     }
 
     public void setOperation(char operation) {
-        this.operation = operation;
+        this.mOperation = operation;
     }
 
     public void setValue(double value) {
-        this.value = value;
+        this.mValue = value;
     }
 
     public void reset() {
-        value = 0;
-        operation = '+';
+        mValue = 0;
+        mOperation = '+';
     }
 }

@@ -12,7 +12,7 @@ import com.google.android.gms.ads.MobileAds;
 
 public class CalculatorActivity extends AppCompatActivity {
     private EditText mEditText;
-    private Controller controller;
+    private Controller mController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,32 +26,32 @@ public class CalculatorActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         mEditText = findViewById(R.id.et_value);
-        controller = new Controller();
+        mController = new Controller();
         display();
     }
 
     public void onNumberBtnClick(View view) {
-        controller.number(getCharOnButton(view));
+        mController.number(getCharOnButton(view));
         display();
     }
 
     public void onCleanBtnClick(View view) {
-        controller.clear();
+        mController.clear();
         display();
     }
 
     public void onEqualBtnClick(View view) {
-        controller.equality();
+        mController.equality();
         display();
     }
 
     public void onOperationBtnClick(View view) {
-        controller.operation(getCharOnButton(view));
+        mController.operation(getCharOnButton(view));
         display();
     }
 
     private void display(){
-        mEditText.setText(controller.getNumber());
+        mEditText.setText(mController.getNumber());
     }
 
     private char getCharOnButton(View view){
